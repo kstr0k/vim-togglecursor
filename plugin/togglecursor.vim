@@ -2,10 +2,13 @@ vim9script
 # ============================================================================
 # File:         togglecursor.vim
 # Description:  Toggles cursor shape in the terminal
-# Maintainer:   John Szakmeister <john@szakmeister.net>
-# Version:      0.6.0
+# Maintainer:   Alin Mr <almr.oss@outlook.com>
+# Version:      0.6.0-vim9
 # License:      Same license as Vim.
 # ============================================================================
+
+# Before fork:  John Szakmeister <john@szakmeister.net>
+# Forked from:  https://github.com/jszakmeister/vim-togglecursor
 
 if exists('g:loaded_togglecursor') || &cp || !has("cursorshape")
   finish
