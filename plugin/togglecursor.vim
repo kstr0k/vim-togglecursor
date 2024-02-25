@@ -11,11 +11,11 @@ if exists('g:loaded_togglecursor') || &cp || !has("cursorshape")
 endif
 
 " Bail out early if not running under a terminal.
-if has("gui_running")
+if has('gui_running')
     finish
 endif
 
-if !exists("g:togglecursor_disable_default_init")
+if !exists('g:togglecursor_disable_default_init')
     let g:togglecursor_disable_default_init = 0
 endif
 
@@ -42,14 +42,14 @@ let s:xterm_blinking_underline = "\<Esc>[3 q"
 
 " Detect whether this version of vim supports changing the replace cursor
 " natively.
-let s:sr_supported = exists("+t_SR")
+let s:sr_supported = exists('+t_SR')
 
 let s:supported_terminal = ''
 
 " Check for supported terminals.
-if exists("g:togglecursor_force") && g:togglecursor_force != ""
-    if count(["xterm", "cursorshape"], g:togglecursor_force) == 0
-        echoerr "Invalid value for g:togglecursor_force: " .
+if exists('g:togglecursor_force') && g:togglecursor_force != ''
+    if count(['xterm', 'cursorshape'], g:togglecursor_force) == 0
+        echoerr 'Invalid value for g:togglecursor_force: ' .
                 \ g:togglecursor_force
     else
         let s:supported_terminal = g:togglecursor_force
@@ -60,21 +60,21 @@ function! s:GetXtermVersion(version)
     return str2nr(matchstr(a:version, '\v^XTerm\(\zs\d+\ze\)'))
 endfunction
 
-if s:supported_terminal == ""
+if s:supported_terminal == ''
     " iTerm, xterm, and VTE based terminals support DECSCUSR.
-    if $TERM_PROGRAM == "iTerm.app" || exists("$ITERM_SESSION_ID")
+    if $TERM_PROGRAM == 'iTerm.app' || exists('$ITERM_SESSION_ID')
         let s:supported_terminal = 'xterm'
-    elseif $TERM_PROGRAM == "Apple_Terminal" && str2nr($TERM_PROGRAM_VERSION) >= 388
+    elseif $TERM_PROGRAM == 'Apple_Terminal' && str2nr($TERM_PROGRAM_VERSION) >= 388
         let s:supported_terminal = 'xterm'
-    elseif $TERM == "xterm-kitty"
+    elseif $TERM == 'xterm-kitty'
         let s:supported_terminal = 'xterm'
-    elseif $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color"
+    elseif $TERM == 'rxvt-unicode' || $TERM == 'rxvt-unicode-256color'
         let s:supported_terminal = 'xterm'
     elseif str2nr($VTE_VERSION) >= 3900
         let s:supported_terminal = 'xterm'
     elseif s:GetXtermVersion($XTERM_VERSION) >= 252
         let s:supported_terminal = 'xterm'
-    elseif $TERM_PROGRAM == "Konsole" || exists("$KONSOLE_DBUS_SESSION")
+    elseif $TERM_PROGRAM == 'Konsole' || exists('$KONSOLE_DBUS_SESSION')
         " This detection is not perfect.  KONSOLE_DBUS_SESSION seems to show
         " up in the environment despite running under tmux in an ssh
         " session if you have also started a tmux session locally on target
@@ -94,22 +94,22 @@ endif
 " Options
 " -------------------------------------------------------------
 
-if !exists("g:togglecursor_default")
+if !exists('g:togglecursor_default')
     let g:togglecursor_default = 'blinking_block'
 endif
 
-if !exists("g:togglecursor_insert")
+if !exists('g:togglecursor_insert')
     let g:togglecursor_insert = 'blinking_line'
-    if $XTERM_VERSION != "" && s:GetXtermVersion($XTERM_VERSION) < 282
+    if $XTERM_VERSION != '' && s:GetXtermVersion($XTERM_VERSION) < 282
         let g:togglecursor_insert = 'blinking_underline'
     endif
 endif
 
-if !exists("g:togglecursor_replace")
+if !exists('g:togglecursor_replace')
     let g:togglecursor_replace = 'blinking_underline'
 endif
 
-if !exists("g:togglecursor_leave")
+if !exists('g:togglecursor_leave')
     if str2nr($VTE_VERSION) >= 3900
         let g:togglecursor_leave = 'blinking_block'
     else
@@ -117,12 +117,12 @@ if !exists("g:togglecursor_leave")
     endif
 endif
 
-if !exists("g:togglecursor_enable_tmux_escaping")
+if !exists('g:togglecursor_enable_tmux_escaping')
     let g:togglecursor_enable_tmux_escaping = 0
 endif
 
 if g:togglecursor_enable_tmux_escaping
-    let s:in_tmux = exists("$TMUX")
+    let s:in_tmux = exists('$TMUX')
 else
     let s:in_tmux = 0
 endif
