@@ -1,5 +1,5 @@
-togglecursor
-============
+togglecursor for Vim9
+=====================
 
 This plugin aims to provide the ability to change the cursor when entering Vim's
 insert mode on terminals that support it.  Currently, that's limited to iTerm,
@@ -14,7 +14,16 @@ Unzip into ``~/.vim`` (or ``%USERPROFILE%\vimfiles`` on Windows).  You may also
 install it under pathogen by extracting it into it's own directory under
 ``bundle``, such as ``~/.vim/bundle/vim-togglecursor``.
 
-The latest version can be obtained from:
+Vim also has a builtin plugin manager: simply clone (or symlink) the repository
+under ``~/.vim/pack/<collection-name>/opt`` and load with
+``packadd vim-togglecursor``.
+
+This repository is a fork adapted for Vim 9+ / ``vim9script`` (which supports
+script compilation and should thus be much lighter on CPU usage). Note that the
+Vim9 version is on the ``vim9`` branch (the default for this repository).
+
+The Vimscript version is on the ``master`` branch and was forked from::
+
     https://github.com/jszakmeister/vim-togglecursor
 
 
