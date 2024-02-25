@@ -166,10 +166,10 @@ function S_ToggleCursorInit()
         return
     endif
 
-    var &t_EI = S_GetEscapeCode(g:togglecursor_default)
-    var &t_SI = S_GetEscapeCode(g:togglecursor_insert)
+    &t_EI = S_GetEscapeCode(g:togglecursor_default)
+    &t_SI = S_GetEscapeCode(g:togglecursor_insert)
     if S_sr_supported
-        var &t_SR = S_GetEscapeCode(g:togglecursor_replace)
+        &t_SR = S_GetEscapeCode(g:togglecursor_replace)
     endif
 endfunction
 
@@ -177,15 +177,15 @@ function S_ToggleCursorLeave()
     # One of the last codes emitted to the terminal before exiting is the "out
     # of termcap" sequence.  Tack our escape sequence to change the cursor type
     # onto the beginning of the sequence.
-    var &t_te = S_GetEscapeCode(g:togglecursor_leave) .. &t_te
+    &t_te = S_GetEscapeCode(g:togglecursor_leave) .. &t_te
 endfunction
 
 function S_ToggleCursorByMode()
     if v:insertmode == 'r' || v:insertmode == 'v'
-        var &t_SI = S_GetEscapeCode(g:togglecursor_replace)
+        &t_SI = S_GetEscapeCode(g:togglecursor_replace)
     else
         # Default to the insert mode cursor.
-        var &t_SI = S_GetEscapeCode(g:togglecursor_insert)
+        &t_SI = S_GetEscapeCode(g:togglecursor_insert)
     endif
 endfunction
 
@@ -195,7 +195,7 @@ endfunction
 # 0.40.2-based terminals seem to have issues with the cursor disappearing in the
 # certain environments.
 if g:togglecursor_disable_default_init == 0
-    var &t_ti = S_GetEscapeCode(g:togglecursor_default) .. &t_ti
+    &t_ti = S_GetEscapeCode(g:togglecursor_default) .. &t_ti
 endif
 
 augroup ToggleCursorStartup
