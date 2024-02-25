@@ -49,7 +49,7 @@ let s:supported_terminal = ''
 " Check for supported terminals.
 if exists('g:togglecursor_force') && g:togglecursor_force != ''
     if count(['xterm', 'cursorshape'], g:togglecursor_force) == 0
-        echoerr 'Invalid value for g:togglecursor_force: ' .
+        echoerr 'Invalid value for g:togglecursor_force: ' ..
                 \ g:togglecursor_force
     else
         let s:supported_terminal = g:togglecursor_force
@@ -135,7 +135,7 @@ endif
 function! s:TmuxEscape(line)
     " Tmux has an escape hatch for talking to the real terminal.  Use it.
     let escaped_line = substitute(a:line, "\<Esc>", "\<Esc>\<Esc>", 'g')
-    return "\<Esc>Ptmux;" . escaped_line . "\<Esc>\\"
+    return "\<Esc>Ptmux;" .. escaped_line .. "\<Esc>\\"
 endfunction
 
 function! s:SupportedTerminal()
@@ -176,7 +176,7 @@ function! s:ToggleCursorLeave()
     " One of the last codes emitted to the terminal before exiting is the "out
     " of termcap" sequence.  Tack our escape sequence to change the cursor type
     " onto the beginning of the sequence.
-    let &t_te = s:GetEscapeCode(g:togglecursor_leave) . &t_te
+    let &t_te = s:GetEscapeCode(g:togglecursor_leave) .. &t_te
 endfunction
 
 function! s:ToggleCursorByMode()
@@ -194,7 +194,7 @@ endfunction
 " 0.40.2-based terminals seem to have issues with the cursor disappearing in the
 " certain environments.
 if g:togglecursor_disable_default_init == 0
-    let &t_ti = s:GetEscapeCode(g:togglecursor_default) . &t_ti
+    let &t_ti = s:GetEscapeCode(g:togglecursor_default) .. &t_ti
 endif
 
 augroup ToggleCursorStartup
