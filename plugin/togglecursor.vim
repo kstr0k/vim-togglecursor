@@ -57,7 +57,7 @@ if exists('g:togglecursor_force') && g:togglecursor_force != ''
     endif
 endif
 
-function! S_GetXtermVersion(version)
+function S_GetXtermVersion(version)
     return str2nr(matchstr(a:version, '\v^XTerm\(\zs\d+\ze\)'))
 endfunction
 
@@ -133,13 +133,13 @@ endif
 # Functions
 # -------------------------------------------------------------
 
-function! S_TmuxEscape(line)
+function S_TmuxEscape(line)
     # Tmux has an escape hatch for talking to the real terminal.  Use it.
     var escaped_line = substitute(a:line, "\<Esc>", "\<Esc>\<Esc>", 'g')
     return "\<Esc>Ptmux;" .. escaped_line .. "\<Esc>\\"
 endfunction
 
-function! S_SupportedTerminal()
+function S_SupportedTerminal()
     if S_supported_terminal == ''
         return 0
     endif
@@ -147,7 +147,7 @@ function! S_SupportedTerminal()
     return 1
 endfunction
 
-function! S_GetEscapeCode(shape)
+function S_GetEscapeCode(shape)
     if !S_SupportedTerminal()
         return ''
     endif
@@ -161,7 +161,7 @@ function! S_GetEscapeCode(shape)
     return l:escape_code
 endfunction
 
-function! S_ToggleCursorInit()
+function S_ToggleCursorInit()
     if !S_SupportedTerminal()
         return
     endif
@@ -173,14 +173,14 @@ function! S_ToggleCursorInit()
     endif
 endfunction
 
-function! S_ToggleCursorLeave()
+function S_ToggleCursorLeave()
     # One of the last codes emitted to the terminal before exiting is the "out
     # of termcap" sequence.  Tack our escape sequence to change the cursor type
     # onto the beginning of the sequence.
     var &t_te = S_GetEscapeCode(g:togglecursor_leave) .. &t_te
 endfunction
 
-function! S_ToggleCursorByMode()
+function S_ToggleCursorByMode()
     if v:insertmode == 'r' || v:insertmode == 'v'
         var &t_SI = S_GetEscapeCode(g:togglecursor_replace)
     else
